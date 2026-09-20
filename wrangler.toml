@@ -1,0 +1,40 @@
+# Claw Hunter OpenAI 相容 API 代理
+# 部署: npx wrangler deploy
+
+name = "clawhunter-proxy"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ============================================================
+# IP Rotation: Deploy relay Workers on multiple CF accounts
+# Each account = different edge node = different IP = independent quota
+#
+# Setup:
+#   1. ./deploy-multi.sh add       (add CF accounts)
+#   2. ./deploy-multi.sh setup     (deploy relay Workers)
+#   3. ./deploy-multi.sh update-main (get config commands)
+#   4. npx wrangler secret put RELAY_URLS
+#   5. npx wrangler secret put RELAY_SECRET
+#   6. npx wrangler deploy
+#
+# Or set as env vars (for testing):
+# [vars]
+# RELAY_URLS = "https://relay1.workers.dev,https://relay2.workers.dev"
+# RELAY_SECRET = "your-shared-secret"
+# ============================================================
+
+# 環境變量 (通過 wrangler secret 或此文件設置)
+# [vars]
+# RELAY_URLS = ""       # 逗號分隔的 Relay Worker URL 列表
+# RELAY_SECRET = ""     # 共享密鑰 (必須與 Relay Worker 一致)
+
+# KV Namespace for relay pool persistence
+[[kv_namespaces]]
+binding = "RELAY_POOL"
+id = "cd835fb4d7a3428a86d5f6cb4391538d"
+
+# 自定義域名 (可選)
+# [routes]
+# pattern = "api.yourdomain.com/*"
+# zone_name = "yourdomain.com"

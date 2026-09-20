@@ -1,0 +1,16 @@
+{
+  "name": "clawhunter-proxy",
+  "version": "1.0.0",
+  "description": "OpenAI-compatible image generation API proxy for Claw Hunter",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "npx wrangler dev",
+    "deploy": "npx wrangler deploy",
+    "tail": "npx wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "keywords": ["openai", "image-generation", "cloudflare-workers", "proxy"],
+  "license": "MIT"
+}
